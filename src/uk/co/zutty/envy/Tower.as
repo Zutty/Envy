@@ -11,10 +11,10 @@ package uk.co.zutty.envy
 		
 		private const FIRING_TIME:uint = 30;
 		
-		[Embed(source = '/data/tower_base.png')]
+		[Embed(source = 'assets/tower_base.png')]
 		private const TOWER_BASE_IMAGE:Class;
 
-		[Embed(source = '/data/tower_gun.png')]
+		[Embed(source = 'assets/tower_gun.png')]
 		private const TOWER_GUN_IMAGE:Class;
 		
 		private var gun:Image; 
@@ -22,14 +22,18 @@ package uk.co.zutty.envy
 
 		public function Tower(x:Number, y:Number) {
 			super(x, y);
-			graphic = new Graphiclist();
-			addGraphic(new Image(TOWER_BASE_IMAGE));
+
+            var base:Image = new Image(TOWER_BASE_IMAGE);
+			addGraphic(base);
+            
 			gun = new Image(TOWER_GUN_IMAGE);
 			gun.smooth = true;
 			gun.centerOrigin();
+            gun.x = 24;
+            gun.y = 24;
 			addGraphic(gun);
-			width = 48;
-			height = 48;
+
+            setHitbox(48, 48, 24, 24);
 		}
 		
 		public function get nearestCreep():Creep {

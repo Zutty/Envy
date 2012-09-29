@@ -8,19 +8,24 @@ package uk.co.zutty.envy
 
 	public class Player extends Thing {
 		
-		[Embed(source = '/data/Alien.png')]
+		[Embed(source = 'assets/alien.png')]
 		private const ALIEN_IMAGE:Class;
 		
 		private var speed:Number;
 		private var waypoint:Waypoint;
 		private var direction:Vector2D;
+        private var _gfx:Image;
 		
 		public function Player() {
 			super();
-			graphic = new Image(ALIEN_IMAGE);
-			speed = 3;
+            
+            _gfx = new Image(ALIEN_IMAGE);
+            _gfx.centerOrigin();
+			graphic = _gfx;
+
+            speed = 3;
 			health = 10;
-			setHitbox(48, 48);
+			setHitbox(48, 48, 24, 24);
 		}
 		
 		public function goTo(waypoint:Waypoint):void {

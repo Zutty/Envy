@@ -1,5 +1,7 @@
 package uk.co.zutty.envy
 {
+	import flash.geom.Point;
+
 	public class Vector2D {
 		
 		public var x:Number;

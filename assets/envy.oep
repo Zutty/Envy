@@ -1,0 +1,34 @@
+<project>
+	<name>Envy</name>
+	<settings>  
+		<defaultWidth>1440</defaultWidth>  
+		<defaultHeight>960</defaultHeight>  
+		<minWidth>320</minWidth>  
+		<minHeight>240</minHeight>  
+		<maxWidth>4800</maxWidth>  
+		<maxHeight>4800</maxHeight>  
+	</settings>
+	<values>
+		<string name="title" default="Envy level" maxChars="30" />  
+	</values> 
+	<layers>  
+		<tiles name="ground" gridSize="48"/>   
+		<tiles name="roads" gridSize="48"/>   
+		<objects name="buildings" gridSize="48"/>   
+		<objects name="nav_mesh" gridSize="48"/>   
+	</layers>
+	<tilesets> 
+		<tileset name="terrain" image="terrain.png" tileWidth="48" tileHeight="48"/>
+		<tileset name="roads" image="roads.png" tileWidth="48" tileHeight="48"/>
+	</tilesets>   
+	<objects>
+		<object name="base" image="earth_base.png" width="96" height="96"/>
+		<object name="tower" image="tower_base.png" width="48" height="48"/>
+		<object name="nav_point" image="navPoint.png" width="48" height="48">
+			<values>
+				<integer name="id"/>
+				<string name="neighbors"/>
+			</values>
+		</object>
+	</objects>
+</project>

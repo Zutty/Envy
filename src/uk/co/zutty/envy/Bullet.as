@@ -10,7 +10,7 @@ package uk.co.zutty.envy
 	
 		private const SPEED:Number = 12;
 		
-		[Embed(source = '/data/bullet.png')]
+		[Embed(source = 'assets/bullet.png')]
 		private const BULLET_IMAGE:Class;
 		
 		private var direction:Vector2D;

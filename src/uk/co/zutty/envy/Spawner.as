@@ -10,15 +10,15 @@ package uk.co.zutty.envy
 		
 		private const SPAWN_TIME:uint = 60;
 
-		[Embed(source = '/data/pop2.mp3')]
+		[Embed(source = 'assets/pop2.mp3')]
 		private const POP_SOUND:Class;
 
-		[Embed(source = '/data/spawner.png')]
+		[Embed(source = 'assets/spawner.png')]
 		private const SPAWNER_IMAGE:Class;
 		
 		private var rate:Number;
 		private var spritemap:Spritemap;
-		private var pop:Sfx;
+		private var _pop:Sfx;
 		private var time:uint;
 		private var lastSpawned:uint;
 		
@@ -27,10 +27,11 @@ package uk.co.zutty.envy
 			spritemap = new Spritemap(SPAWNER_IMAGE, 48, 48);
 			spritemap.add("spin", [0, 1, 2, 3, 4, 5, 6, 7], 0.6, true);
 			spritemap.play("spin");
+            spritemap.centerOrigin();
 			graphic = spritemap;
-			setHitbox(48, 48);
+			setHitbox(48, 48, 24, 24);
 			
-			pop = new Sfx(POP_SOUND);
+			_pop = new Sfx(POP_SOUND);
 
 			rate = 3;
 			health = 3;
@@ -41,14 +42,16 @@ package uk.co.zutty.envy
 			lastSpawned = time;
 			var creep:Creep = new Creep();
 			gameworld.creeps.push(creep);
-			creep.x = x - (creep.width - width) / 2;
-			creep.y = y - (creep.height - height) / 2;
+			creep.x = x;// - (creep.width - width) / 2;
+			creep.y = y;// - (creep.height - height) / 2;
 			gameworld.add(creep);
-			creep.onSpawn(function():void{
-				pop.play();
-			});
+			creep.onSpawn(pop);
 			creep.goTo(gameworld.nearestWaypoint(x, y));			
 		}
+        
+        public function pop():void {
+            _pop.play();
+        }
 		
 		override public function update():void {
 			time++;

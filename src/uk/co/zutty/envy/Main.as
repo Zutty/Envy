@@ -9,6 +9,8 @@ package uk.co.zutty.envy
 		
 		public function Main() {
 			super(640, 480, 60, true);
+            FP.console.enable();
+            FP.console.debug = true;
 			FP.world = new GameWorld();
 		}
 	} 

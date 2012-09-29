@@ -6,7 +6,7 @@ package uk.co.zutty.envy
 	
 	public class EarthBase extends Thing {
 		
-		[Embed(source = '/data/earth_base.png')]
+		[Embed(source = 'assets/earth_base.png')]
 		private const BASE_IMAGE:Class;
 		
 		public function EarthBase() {

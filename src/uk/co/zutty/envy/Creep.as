@@ -9,7 +9,7 @@ package uk.co.zutty.envy
 		
 		private const FADE_RATE:Number = 0.03;
 		
-		[Embed(source = '/data/smallalien.png')]
+		[Embed(source = 'assets/smallalien.png')]
 		private const SMALLALIEN_IMAGE:Class;
 		
 		private var speed:Number;
@@ -23,11 +23,11 @@ package uk.co.zutty.envy
 			img = new Image(SMALLALIEN_IMAGE);
 			img.alpha = 0.0;
 			img.smooth = true;
-			img.originX = img.originY = 12;
+			img.centerOrigin();
 			graphic = img;
 			speed = 3;
 			health = 3;
-			setHitbox(24, 24);
+			setHitbox(24, 24, 12, 12);
 		}
 		
 		public function goTo(waypoint:Waypoint):void {
