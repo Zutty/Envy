@@ -5,6 +5,8 @@ package uk.co.zutty.envy
 	import net.flashpunk.graphics.Image;
 	import net.flashpunk.utils.Input;
 	import net.flashpunk.utils.Key;
+	
+	import uk.co.zutty.envy.path.Node;
 
 	public class Player extends Thing {
 		

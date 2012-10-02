@@ -17,7 +17,7 @@ package uk.co.zutty.envy.path
             }
         }
         
-        public function findPath(fromX:int, fromY:int, goalX:int, goalY:int, navGraph:NavGraph):Waypoint {
+        public function findPath(fromX:int, fromY:int, goalX:int, goalY:int, navGraph:NavGraph, tileW:Number, tileH:Number):Waypoint {
             var h:Function = function (x:int, y:int):Number { return distManhattan(x, y, goalX, goalY); }
             var open:Vector.<Node> = new Vector.<Node>();
             var closed:Dictionary = new Dictionary();
@@ -25,14 +25,11 @@ package uk.co.zutty.envy.path
             // Add root node
             open[0] = new Node(fromX, fromY, 0, h(fromX, fromY), null);
             
-            var i:int = 0;
             while(open.length > 0) {
                 var current:Node = open.shift();
-                i++;
                 
                 if(current.x == goalX && current.y == goalY) {
-                    trace("Took "+i+" iterations");
-                    return walkReverse(current);
+                    return walkReverse(current, tileW, tileH);
                 }
                 
                 closed[toTileNum(current.x, current.y, navGraph)] = 1;
@@ -71,12 +68,12 @@ package uk.co.zutty.envy.path
             return _neighbors;
         }
         
-        private function walkReverse(node:Node):Waypoint {
+        private function walkReverse(node:Node, tileW:Number, tileH:Number):Waypoint {
             var path:Waypoint = null;
             var walk:Node = node;
             
             while(walk != null) {
-                path = new Waypoint((walk.x * 48) + 24, (walk.y * 48) + 24, path);
+                path = new Waypoint((walk.x * tileW) + (tileW/2), (walk.y * tileH) + (tileH/2), path);
                 walk = walk.parent;
             }
 

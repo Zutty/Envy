@@ -10,6 +10,9 @@ package uk.co.zutty.envy
 		
 		private const SPAWN_TIME:uint = 60;
 
+        [Embed(source = 'assets/navPoint.png')]
+        private const NAV_IMAGE:Class;
+        
 		[Embed(source = 'assets/pop2.mp3')]
 		private const POP_SOUND:Class;
 
@@ -38,6 +41,10 @@ package uk.co.zutty.envy
 			health = 3;
 			time = 0;
 		}
+        
+        public function get path():Waypoint {
+            return _path;
+        }
         
         override public function added():void {
             if(gameworld) {

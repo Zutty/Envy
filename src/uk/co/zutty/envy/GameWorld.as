@@ -15,9 +15,6 @@ package uk.co.zutty.envy
 	
 	public class GameWorld extends World {
 		
-        [Embed(source = 'assets/navPoint.png')]
-        private const NAV_IMAGE:Class;
-
         private var _level:OgmoLevel;
 		private var _creeps:Vector.<Creep>;
         private var _player:Player;
@@ -48,14 +45,6 @@ package uk.co.zutty.envy
 			//spawnCreep();
 			//add(new Tower(0, 0));
 			//add(new Tower(48, 0));
-            
-            var p:Waypoint = getPathFrom(48*3, 48*4);
-            while(p != null) {
-                var g:Image = new Image(NAV_IMAGE);
-                g.centerOrigin();
-                add(new Entity(p.x, p.y, g));
-                p = p.next;
-            }    
 		}
 		
         private function loadLevel(lvl:OgmoLevel):void {
@@ -83,17 +72,17 @@ package uk.co.zutty.envy
 		}
 		
 		public function getPathFrom(x:Number, y:Number):Waypoint {
-            var tx:int = Math.round(x / _level.tileWidth);
-            var ty:int = Math.round(y / _level.tileHeight);
+            var tx:int = Math.floor(x / _level.tileWidth);
+            var ty:int = Math.floor(y / _level.tileHeight);
             var from:Point = _navGraph.getNearestPoint(tx, ty);
             
             var goal:Point = _level.getObjectPosition("goals", "maingoal");
             var gx:int = goal.x / _level.tileWidth;
             var gy:int = goal.y / _level.tileHeight;
                         
-            var path:Waypoint = Main.pathfinder.findPath(from.x, from.y, gx, gy, _navGraph);
+            var path:Waypoint = Main.pathfinder.findPath(from.x, from.y, gx, gy, _navGraph, _level.tileWidth, _level.tileHeight);
             
-			return path;//new Waypoint(fx, fy, path);
+			return path;
 		}
         
         override public function update():void {
