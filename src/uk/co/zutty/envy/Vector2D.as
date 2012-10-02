@@ -1,6 +1,8 @@
 package uk.co.zutty.envy
 {
 	import flash.geom.Point;
+	
+	import net.flashpunk.FP;
 
 	public class Vector2D {
 		
@@ -16,9 +18,13 @@ package uk.co.zutty.envy
 			return new Vector2D(x*scalar, y*scalar);
 		}
 		
-		public function magnitude():Number {
+		public function get magnitude():Number {
 			return Math.sqrt(x*x + y*y);
 		}
+        
+        public function get angle():Number {
+            return (Math.atan2(x, y) * 180/Math.PI);
+        }
 		
 		public static function unitVector(ax:Number, ay:Number, bx:Number, by:Number):Vector2D {
 			var x:Number = bx - ax;

@@ -28,6 +28,10 @@ package uk.co.zutty.envy
 			_player.y = 48;
 			add(_player);
 		}
+        
+        public function isOutOfBounds(e:Entity):Boolean {
+            return (e.x - e.width) < 0 || (e.x + e.width) > _level.width || (e.y - e.height) < 0 || (e.y + e.height) > _level.height;
+        }
 		
         private function loadLevel(lvl:OgmoLevel):void {
             _level = lvl;

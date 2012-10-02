@@ -10,6 +10,7 @@ package uk.co.zutty.envy
 	public class Tower extends EnvyEntity {
 		
 		private const FIRING_TIME:uint = 30;
+        private const RANGE:uint = 250;
 		
 		[Embed(source = 'assets/tower_base.png')]
 		private const TOWER_BASE_IMAGE:Class;
@@ -33,7 +34,7 @@ package uk.co.zutty.envy
             _gun.y = 24;
 			addGraphic(_gun);
 
-            setHitbox(48, 48, 24, 24);
+            setHitbox(48, 48, 0, 0);
 		}
 		
 		override public function update():void {
@@ -43,7 +44,7 @@ package uk.co.zutty.envy
             
 			var target:Creep = gameworld.nearestToEntity("creep", this) as Creep;
             
-			if(target != null) {
+			if(target != null && distanceFrom(target, true) <= RANGE) {
 				var cx:Number = x + (width/2);
 				var cy:Number = y + (height/2);
 				var dx:Number = cx - target.x;
@@ -52,7 +53,10 @@ package uk.co.zutty.envy
 				
 				if(_time > FIRING_TIME) {
 					_time = 0;
-					gameworld.add(new Bullet(cx, cy, Vector2D.unitVector(cx, cy, target.x, target.y)));
+                    var rocket:Bullet = gameworld.create(Bullet) as Bullet;
+                    rocket.x = cx;
+                    rocket.y = cy;
+                    rocket.direction = Vector2D.unitVector(cx, cy, target.x, target.y); 
 				}
 			}
 		}
