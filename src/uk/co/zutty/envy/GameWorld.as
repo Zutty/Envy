@@ -5,18 +5,23 @@ package uk.co.zutty.envy
 	import net.flashpunk.Entity;
 	import net.flashpunk.FP;
 	import net.flashpunk.World;
+	import net.flashpunk.graphics.Image;
 	import net.flashpunk.utils.Input;
 	import net.flashpunk.utils.Key;
 	
 	import uk.co.zutty.envy.levels.Level1;
+	import uk.co.zutty.envy.levels.NavGraph;
 	import uk.co.zutty.envy.levels.OgmoLevel;
 	
 	public class GameWorld extends World {
 		
+        [Embed(source = 'assets/navPoint.png')]
+        private const NAV_IMAGE:Class;
+
         private var _level:OgmoLevel;
 		private var _creeps:Vector.<Creep>;
         private var _player:Player;
-		private var a:Waypoint;
+        private var _navGraph:NavGraph;
 		private var time:uint;
 		
 		public function GameWorld() {
@@ -39,16 +44,18 @@ package uk.co.zutty.envy
 			//base.y = 96;
 			//add(base);
 
-			//var d:Waypoint = new Waypoint(48*1, 48*4);
-			//var c:Waypoint = new Waypoint(48*1, 48*7, d);
-			//var b:Waypoint = new Waypoint(48*6, 48*7, c);
-			//a = new Waypoint(48*6, 48*4, b);
-			//d.next = a;
-			
 			_creeps = new Vector.<Creep>();
 			//spawnCreep();
 			//add(new Tower(0, 0));
 			//add(new Tower(48, 0));
+            
+            var p:Waypoint = getPathFrom(48*3, 48*4);
+            while(p != null) {
+                var g:Image = new Image(NAV_IMAGE);
+                g.centerOrigin();
+                add(new Entity(p.x, p.y, g));
+                p = p.next;
+            }    
 		}
 		
         private function loadLevel(lvl:OgmoLevel):void {
@@ -67,14 +74,26 @@ package uk.co.zutty.envy
             for each(p in _level.getObjectPositions("buildings", "tower")) {
                 add(new Tower(p.x, p.y));
             }
-}
+            
+            _navGraph = _level.getNavGraph("roads");
+        }
         
 		public function get creeps():Vector.<Creep> {
 			return _creeps;
 		}
 		
-		public function nearestWaypoint(x:Number, y:Number):Waypoint {
-			return a;
+		public function getPathFrom(x:Number, y:Number):Waypoint {
+            var tx:int = Math.round(x / _level.tileWidth);
+            var ty:int = Math.round(y / _level.tileHeight);
+            var from:Point = _navGraph.getNearestPoint(tx, ty);
+            
+            var goal:Point = _level.getObjectPosition("goals", "maingoal");
+            var gx:int = goal.x / _level.tileWidth;
+            var gy:int = goal.y / _level.tileHeight;
+                        
+            var path:Waypoint = Main.pathfinder.findPath(from.x, from.y, gx, gy, _navGraph);
+            
+			return path;//new Waypoint(fx, fy, path);
 		}
         
         override public function update():void {

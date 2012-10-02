@@ -21,6 +21,7 @@ package uk.co.zutty.envy
 		private var _pop:Sfx;
 		private var time:uint;
 		private var lastSpawned:uint;
+        private var _path:Waypoint;
 		
 		public function Spawner() {
 			super();
@@ -37,7 +38,13 @@ package uk.co.zutty.envy
 			health = 3;
 			time = 0;
 		}
-		
+        
+        override public function added():void {
+            if(gameworld) {
+                _path = gameworld.getPathFrom(x, y);
+            }
+        }
+        
 		public function spawnCreep():void {
 			lastSpawned = time;
 			var creep:Creep = new Creep();
@@ -46,7 +53,7 @@ package uk.co.zutty.envy
 			creep.y = y;// - (creep.height - height) / 2;
 			gameworld.add(creep);
 			creep.onSpawn(pop);
-			creep.goTo(gameworld.nearestWaypoint(x, y));			
+			creep.goTo(_path);			
 		}
         
         public function pop():void {

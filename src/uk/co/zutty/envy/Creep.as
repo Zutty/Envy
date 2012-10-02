@@ -31,8 +31,10 @@ package uk.co.zutty.envy
 		}
 		
 		public function goTo(waypoint:Waypoint):void {
-			this.waypoint = waypoint;
-			direction = Vector2D.unitVector(x, y, waypoint.x, waypoint.y);
+            if(waypoint) {
+    			this.waypoint = waypoint;
+    			direction = Vector2D.unitVector(x, y, waypoint.x, waypoint.y);
+            }
 		}
 				
 		override public function update():void {

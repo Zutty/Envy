@@ -2,21 +2,22 @@ package uk.co.zutty.envy.levels
 {
 	import flash.geom.Point;
 	import flash.utils.ByteArray;
+	import flash.utils.Dictionary;
 	
 	import net.flashpunk.Entity;
 	import net.flashpunk.graphics.Tilemap;
 	import net.flashpunk.masks.Grid;
 
-	public class OgmoLevel {
+	public class OgmoLevel implements Level {
 		
         private var data:XML;
         private var tileMaps:Object;
-        private var tileWidth:Number;
-        private var tileHeight:Number;
+        private var _tileWidth:Number;
+        private var _tileHeight:Number;
 
         public function OgmoLevel(raw:Class, tileMaps:Object, tileWidth:Number, tileHeight:Number) {
-            this.tileWidth = tileWidth;
-            this.tileHeight = tileHeight;
+            _tileWidth = tileWidth;
+            _tileHeight = tileHeight;
             this.tileMaps = tileMaps;
             var bytes:ByteArray = new raw();
             data = new XML(bytes.readUTFBytes(bytes.length));
@@ -30,6 +31,14 @@ package uk.co.zutty.envy.levels
             return data.height;
         }
         
+        public function get tileWidth():Number {
+            return _tileWidth;
+        }
+        
+        public function get tileHeight():Number {
+            return _tileHeight;
+        }
+
         public function getLayer(name:String, solid:Boolean = false):Layer {
             return loadLayer(name, true, solid);
         }
@@ -85,6 +94,21 @@ package uk.co.zutty.envy.levels
                 ret[ret.length] = new Point(obj.@x, obj.@y);
             }
             return ret;
+        }
+        
+        public function getObjectPosition(layerName:String, objName:String):Point {
+            var obj:XML = data[layerName][0][objName][0];
+            return new Point(obj.@x, obj.@y);
+        }
+
+        public function getNavGraph(layerName:String):NavGraph {
+            var graph:NavGraph = new NavGraph(width / tileWidth, height / tileHeight);
+            
+            for each(var tile:XML in data[layerName][0].tile) {
+                graph.setNavigable(tile.@x / tileWidth, tile.@y / tileHeight);
+            }
+            
+            return graph; 
         }
 	}
 }
