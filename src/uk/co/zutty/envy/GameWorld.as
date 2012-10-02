@@ -16,35 +16,17 @@ package uk.co.zutty.envy
 	public class GameWorld extends World {
 		
         private var _level:OgmoLevel;
-		private var _creeps:Vector.<Creep>;
         private var _player:Player;
         private var _navGraph:NavGraph;
-		private var time:uint;
+		private var _time:uint = 0;
 		
 		public function GameWorld() {
-			time = 0;
-            
             loadLevel(new Level1());
 			
 			_player = new Player();
 			_player.x = 48;
 			_player.y = 48;
 			add(_player);
-
-			//var s:Spawner = new Spawner();
-			//s.x = 96;
-			//s.y = 96;
-			//add(s);
-
-			//var base:EarthBase = new EarthBase();
-			//base.x = 384;
-			//base.y = 96;
-			//add(base);
-
-			_creeps = new Vector.<Creep>();
-			//spawnCreep();
-			//add(new Tower(0, 0));
-			//add(new Tower(48, 0));
 		}
 		
         private function loadLevel(lvl:OgmoLevel):void {
@@ -67,10 +49,6 @@ package uk.co.zutty.envy
             _navGraph = _level.getNavGraph("roads");
         }
         
-		public function get creeps():Vector.<Creep> {
-			return _creeps;
-		}
-		
 		public function getPathFrom(x:Number, y:Number):Waypoint {
             var tx:int = Math.floor(x / _level.tileWidth);
             var ty:int = Math.floor(y / _level.tileHeight);

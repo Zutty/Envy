@@ -6,29 +6,26 @@ package uk.co.zutty.envy
 	
 	public class Thing extends EnvyEntity {
 		
-		private var _health:Number;
-		private var _dead:Boolean;
+        private var _maxHealth:Number = 0;
+		private var _health:Number = 0;
 
 		public function Thing(x:Number=0, y:Number=0, graphic:Graphic=null, mask:Mask=null) {
 			super(x, y, graphic, mask);
-			_health = 0;
-			_dead = false;
 		}
+        
+        override public function added():void {
+            _health = _maxHealth; 
+        }
+        
+        public function get maxHealth():Number {
+            return _maxHealth;
+        }
+        
+        public function set maxHealth(mh:Number):void {
+            _maxHealth = mh;
+            _health = _maxHealth;
+        }
 		
-		public function destroy():void {
-			_dead = true;
-			_health = 0;
-			FP.world.remove(this);
-		}
-
-		public function get dead():Boolean {
-			return _dead;
-		}
-		
-		public function set dead(d:Boolean):void {
-			_dead = d;
-		}
-
 		public function get health():Number {
 			return _health;
 		}
@@ -40,9 +37,8 @@ package uk.co.zutty.envy
 		public function hurt():void {
 			_health--;
 			if(_health <= 0) {
-				destroy();
+                gameworld.recycle(this);
 			}
 		}
-		
 	}
 }

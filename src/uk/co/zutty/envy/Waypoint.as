@@ -27,11 +27,5 @@ package uk.co.zutty.envy
 		public function set next(n:Waypoint):void {
 			_next = n;
 		}
-
-		public function distanceTo(px:Number, py:Number):Number {
-			var dx:Number = px - _x;
-			var dy:Number = py - _y;
-			return Math.sqrt(dx*dx + dy+dy);
-		}
 	}
 }

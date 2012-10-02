@@ -8,11 +8,17 @@ package uk.co.zutty.envy
 		
 		[Embed(source = 'assets/earth_base.png')]
 		private const BASE_IMAGE:Class;
+        
+        private var _gfx:Image;
 		
 		public function EarthBase() {
 			super();
-			graphic = new Image(BASE_IMAGE);
+			_gfx = new Image(BASE_IMAGE);
+            graphic = _gfx;
 			health = 12;
+            
+            type = "building";
+            setHitbox(96, 96, 0, 0);
 		}
 	}
 }

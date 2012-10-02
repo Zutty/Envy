@@ -19,27 +19,27 @@ package uk.co.zutty.envy
 		[Embed(source = 'assets/spawner.png')]
 		private const SPAWNER_IMAGE:Class;
 		
-		private var rate:Number;
-		private var spritemap:Spritemap;
+		private var _rate:Number;
+		private var _spritemap:Spritemap;
 		private var _pop:Sfx;
-		private var time:uint;
-		private var lastSpawned:uint;
+		private var _time:uint;
+		private var _lastSpawned:uint;
         private var _path:Waypoint;
 		
 		public function Spawner() {
 			super();
-			spritemap = new Spritemap(SPAWNER_IMAGE, 48, 48);
-			spritemap.add("spin", [0, 1, 2, 3, 4, 5, 6, 7], 0.6, true);
-			spritemap.play("spin");
-            spritemap.centerOrigin();
-			graphic = spritemap;
+			_spritemap = new Spritemap(SPAWNER_IMAGE, 48, 48);
+			_spritemap.add("spin", [0, 1, 2, 3, 4, 5, 6, 7], 0.6, true);
+			_spritemap.play("spin");
+            _spritemap.centerOrigin();
+			graphic = _spritemap;
 			setHitbox(48, 48, 24, 24);
 			
 			_pop = new Sfx(POP_SOUND);
 
-			rate = 3;
+			_rate = 3;
 			health = 3;
-			time = 0;
+			_time = 0;
 		}
         
         public function get path():Waypoint {
@@ -53,11 +53,10 @@ package uk.co.zutty.envy
         }
         
 		public function spawnCreep():void {
-			lastSpawned = time;
-			var creep:Creep = new Creep();
-			gameworld.creeps.push(creep);
-			creep.x = x;// - (creep.width - width) / 2;
-			creep.y = y;// - (creep.height - height) / 2;
+			_lastSpawned = _time;
+			var creep:Creep = gameworld.create(Creep) as Creep;
+			creep.x = x;
+			creep.y = y;
 			gameworld.add(creep);
 			creep.onSpawn(pop);
 			creep.goTo(_path);			
@@ -68,9 +67,10 @@ package uk.co.zutty.envy
         }
 		
 		override public function update():void {
-			time++;
-			super.update();
-			if(time > lastSpawned + SPAWN_TIME) {
+            super.update();
+
+            _time++;
+			if(_time > _lastSpawned + SPAWN_TIME) {
 				spawnCreep();
 			}
 		}

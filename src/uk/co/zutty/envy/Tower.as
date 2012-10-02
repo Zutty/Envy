@@ -7,7 +7,7 @@ package uk.co.zutty.envy
 	import net.flashpunk.graphics.Graphiclist;
 	import net.flashpunk.graphics.Image;
 	
-	public class Tower extends Entity {
+	public class Tower extends EnvyEntity {
 		
 		private const FIRING_TIME:uint = 30;
 		
@@ -17,8 +17,8 @@ package uk.co.zutty.envy
 		[Embed(source = 'assets/tower_gun.png')]
 		private const TOWER_GUN_IMAGE:Class;
 		
-		private var gun:Image; 
-		private var time:uint;
+		private var _gun:Image; 
+		private var _time:uint;
 
 		public function Tower(x:Number, y:Number) {
 			super(x, y);
@@ -26,54 +26,33 @@ package uk.co.zutty.envy
             var base:Image = new Image(TOWER_BASE_IMAGE);
 			addGraphic(base);
             
-			gun = new Image(TOWER_GUN_IMAGE);
-			gun.smooth = true;
-			gun.centerOrigin();
-            gun.x = 24;
-            gun.y = 24;
-			addGraphic(gun);
+			_gun = new Image(TOWER_GUN_IMAGE);
+			_gun.smooth = true;
+			_gun.centerOrigin();
+            _gun.x = 24;
+            _gun.y = 24;
+			addGraphic(_gun);
 
             setHitbox(48, 48, 24, 24);
 		}
 		
-		public function get nearestCreep():Creep {
-			if(FP.world is GameWorld) {
-				var gameWorld:GameWorld = (GameWorld)(FP.world);
-				var creeps:Vector.<Creep> = gameWorld.creeps;
-				var nearest:Creep = null;
-				var nearDist:Number = 0;
-
-				for each(var creep:Creep in creeps) {
-					var dx:Number = creep.x - x;
-					var dy:Number = creep.y - y;
-					var dist:Number = Math.sqrt(dx*dx + dy*dy);
-					
-					if((nearest == null || dist < nearDist) && !creep.dead) {
-						nearest = creep;
-						nearDist = dist;
-					}	
-				}
-
-				return nearest;
-			} else {
-				return null;
-			}
-		}
-		
 		override public function update():void {
-			time++;
 			super.update();
-			var target:Creep = nearestCreep;
-			if(target != null && !target.dead) {
+
+            _time++;
+            
+			var target:Creep = gameworld.nearestToEntity("creep", this) as Creep;
+            
+			if(target != null) {
 				var cx:Number = x + (width/2);
 				var cy:Number = y + (height/2);
 				var dx:Number = cx - target.x;
 				var dy:Number = cy - target.y;
-				gun.angle = (Math.atan2(dx, dy) * 180/Math.PI);
+				_gun.angle = (Math.atan2(dx, dy) * 180/Math.PI);
 				
-				if(time > FIRING_TIME) {
-					time = 0;
-					FP.world.add(new Bullet(cx, cy, Vector2D.unitVector(cx, cy, target.x, target.y)));
+				if(_time > FIRING_TIME) {
+					_time = 0;
+					gameworld.add(new Bullet(cx, cy, Vector2D.unitVector(cx, cy, target.x, target.y)));
 				}
 			}
 		}

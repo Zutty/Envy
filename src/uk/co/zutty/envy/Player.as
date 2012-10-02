@@ -13,9 +13,8 @@ package uk.co.zutty.envy
 		[Embed(source = 'assets/alien.png')]
 		private const ALIEN_IMAGE:Class;
 		
-		private var speed:Number;
-		private var waypoint:Waypoint;
-		private var direction:Vector2D;
+		private var _speed:Number;
+		private var _direction:Vector2D;
         private var _gfx:Image;
 		
 		public function Player() {
@@ -25,26 +24,21 @@ package uk.co.zutty.envy
             _gfx.centerOrigin();
 			graphic = _gfx;
 
-            speed = 3;
+            _speed = 3;
 			health = 10;
 			setHitbox(48, 48, 24, 24);
 		}
 		
-		public function goTo(waypoint:Waypoint):void {
-			this.waypoint = waypoint;
-			direction = Vector2D.unitVector(x, y, waypoint.x, waypoint.y);
-		}
-		
 		override public function update():void {
 			if(Input.check(Key.RIGHT)) {
-				x += speed;
+				x += _speed;
 			} else if(Input.check(Key.LEFT)) {
-				x -= speed;
+				x -= _speed;
 			}
 			if(Input.check(Key.UP)) {
-				y -= speed;
+				y -= _speed;
 			} else if(Input.check(Key.DOWN)) {
-				y += speed;
+				y += _speed;
 			}
 			
 			if(Input.pressed(Key.SPACE)) {

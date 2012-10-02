@@ -12,48 +12,49 @@ package uk.co.zutty.envy
 		[Embed(source = 'assets/smallalien.png')]
 		private const SMALLALIEN_IMAGE:Class;
 		
-		private var speed:Number;
-		private var waypoint:Waypoint;
-		private var direction:Vector2D;
-		private var img:Image;
-		private var spawnCallback:Function;
+		private var _speed:Number;
+		private var _waypoint:Waypoint;
+		private var _direction:Vector2D;
+		private var _img:Image;
+		private var _spawnCallback:Function;
 		
 		public function Creep() {
 			super();
-			img = new Image(SMALLALIEN_IMAGE);
-			img.alpha = 0.0;
-			img.smooth = true;
-			img.centerOrigin();
-			graphic = img;
-			speed = 3;
-			health = 3;
+			_img = new Image(SMALLALIEN_IMAGE);
+			_img.alpha = 0.0;
+			_img.smooth = true;
+			_img.centerOrigin();
+			graphic = _img;
+			_speed = 3;
+			maxHealth = 3;
 			setHitbox(24, 24, 12, 12);
+            type = "creep";
 		}
 		
 		public function goTo(waypoint:Waypoint):void {
             if(waypoint) {
-    			this.waypoint = waypoint;
-    			direction = Vector2D.unitVector(x, y, waypoint.x, waypoint.y);
+    			_waypoint = waypoint;
+    			_direction = Vector2D.unitVector(x, y, _waypoint.x, _waypoint.y);
             }
 		}
 				
 		override public function update():void {
-			if(img.alpha < 1.0) {
-				img.alpha += Math.min(FADE_RATE, 1.0);
-				img.scale = img.alpha;
-				img.angle = (img.alpha * 500) + 220;
+			if(_img.alpha < 1.0) {
+				_img.alpha += Math.min(FADE_RATE, 1.0);
+				_img.scale = _img.alpha;
+				_img.angle = (_img.alpha * 500) + 220;
 				
-				if(img.alpha == 1.0 && spawnCallback != null) {
-					spawnCallback();
+				if(_img.alpha == 1.0 && _spawnCallback != null) {
+					_spawnCallback();
 				}
-			} else if(waypoint != null) {
-				if(waypoint.distanceTo(x, y) <= speed) {
-					x = waypoint.x;
-					y = waypoint.y;
-					goTo(waypoint.next);
+			} else if(_waypoint != null) {
+				if(FP.distance(_waypoint.x, _waypoint.y, x, y) <= _speed) {
+					x = _waypoint.x;
+					y = _waypoint.y;
+					goTo(_waypoint.next);
 				} else {
-					x += direction.x * speed;
-					y += direction.y * speed;
+					x += _direction.x * _speed;
+					y += _direction.y * _speed;
 				}
 			}
 			
@@ -62,10 +63,15 @@ package uk.co.zutty.envy
 				b.destroy();
 				hurt();
 			}
-		}
+
+            var eb:EarthBase = collide("building", x, y) as EarthBase;
+            if(eb) {
+                gameworld.recycle(this);
+            }
+        }
 		
 		public function onSpawn(cb:Function):void {
-			spawnCallback = cb;
+			_spawnCallback = cb;
 		}
 	}
 }
