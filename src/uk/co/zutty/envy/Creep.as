@@ -26,7 +26,7 @@ package uk.co.zutty.envy
 			_img.centerOrigin();
 			graphic = _img;
 			_speed = 3;
-			maxHealth = 3;
+			maxHealth = 1;
 			setHitbox(24, 24, 12, 12);
             type = "creep";
 		}
@@ -58,12 +58,6 @@ package uk.co.zutty.envy
 				}
 			}
 			
-			var b:Bullet = collide("bullet", x, y) as Bullet;
-			if(b) {
-				b.destroy();
-				hurt();
-			}
-
             var eb:EarthBase = collide("building", x, y) as EarthBase;
             if(eb) {
                 gameworld.recycle(this);

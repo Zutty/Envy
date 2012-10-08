@@ -27,6 +27,7 @@ package uk.co.zutty.envy
             _speed = 3;
 			health = 10;
 			setHitbox(48, 48, 24, 24);
+            type = "creep";
 		}
 		
 		override public function update():void {
@@ -46,12 +47,6 @@ package uk.co.zutty.envy
 				s.x = x;
 				s.y = y;
 				gameworld.add(s);
-			}
-			
-			var b:Bullet = collide("bullet", x, y) as Bullet;
-			if(b) {
-				b.destroy();
-				hurt();
 			}
 		}
 	}

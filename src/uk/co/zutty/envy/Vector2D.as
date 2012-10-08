@@ -15,7 +15,9 @@ package uk.co.zutty.envy
 		}
 		
 		public function multiply(scalar:Number):Vector2D {
-			return new Vector2D(x*scalar, y*scalar);
+            x *= scalar;
+            y *= scalar;
+			return this;
 		}
 		
 		public function get magnitude():Number {
@@ -25,13 +27,14 @@ package uk.co.zutty.envy
         public function get angle():Number {
             return (Math.atan2(x, y) * 180/Math.PI);
         }
+        
+        public function normalise(length:Number = 1):Vector2D {
+            multiply(length / magnitude);
+            return this;
+        }
 		
 		public static function unitVector(ax:Number, ay:Number, bx:Number, by:Number):Vector2D {
-			var x:Number = bx - ax;
-			var y:Number = by - ay;
-			var mag:Number = Math.sqrt(x*x + y*y);
-			
-			return new Vector2D(x/mag, y/mag);
+			return new Vector2D(bx - ax, by - ay).normalise();
 		}
 	}
 }
