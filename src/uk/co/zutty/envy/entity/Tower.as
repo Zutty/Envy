@@ -1,4 +1,4 @@
-package uk.co.zutty.envy
+package uk.co.zutty.envy.entity
 {
 	import net.flashpunk.Entity;
 	import net.flashpunk.FP;
@@ -6,6 +6,7 @@ package uk.co.zutty.envy
 	import net.flashpunk.Mask;
 	import net.flashpunk.graphics.Graphiclist;
 	import net.flashpunk.graphics.Image;
+	import uk.co.zutty.envy.Vector2D;
 	
 	public class Tower extends EnvyEntity {
 		
@@ -53,7 +54,7 @@ package uk.co.zutty.envy
 				
 				if(_time > FIRING_TIME) {
 					_time = 0;
-                    var rocket:Bullet = gameworld.create(Bullet) as Bullet;
+                    var rocket:Rocket = gameworld.create(Rocket) as Rocket;
                     rocket.x = cx;
                     rocket.y = cy;
                     rocket.target = new Vector2D(target.x, target.y); 

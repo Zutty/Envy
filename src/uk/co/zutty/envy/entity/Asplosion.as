@@ -1,4 +1,4 @@
-package uk.co.zutty.envy
+package uk.co.zutty.envy.entity
 {
     import net.flashpunk.Entity;
     import net.flashpunk.FP;
@@ -43,7 +43,7 @@ package uk.co.zutty.envy
                 var creeps:Array = [];
                 collideInto("creep", x, y, creeps);
                 
-                for each(var creep:Thing in creeps) {
+                for each(var creep:Hurtable in creeps) {
                     creep.hurt();
                 }
                 

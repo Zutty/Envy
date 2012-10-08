@@ -1,15 +1,15 @@
-package uk.co.zutty.envy
+package uk.co.zutty.envy.entity
 {
 	import net.flashpunk.FP;
 	import net.flashpunk.Graphic;
 	import net.flashpunk.Mask;
 	
-	public class Thing extends EnvyEntity {
+	public class Hurtable extends EnvyEntity {
 		
         private var _maxHealth:Number = 0;
 		private var _health:Number = 0;
 
-		public function Thing(x:Number=0, y:Number=0, graphic:Graphic=null, mask:Mask=null) {
+		public function Hurtable(x:Number=0, y:Number=0, graphic:Graphic=null, mask:Mask=null) {
 			super(x, y, graphic, mask);
 		}
         

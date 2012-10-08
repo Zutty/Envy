@@ -12,6 +12,9 @@ package uk.co.zutty.envy
 	import uk.co.zutty.envy.levels.Level1;
 	import uk.co.zutty.envy.levels.NavGraph;
 	import uk.co.zutty.envy.levels.OgmoLevel;
+	import uk.co.zutty.envy.entity.EarthBase;
+	import uk.co.zutty.envy.entity.Player;
+	import uk.co.zutty.envy.entity.Tower;
 	
 	public class GameWorld extends World {
 		

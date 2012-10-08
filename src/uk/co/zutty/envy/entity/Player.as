@@ -1,4 +1,4 @@
-package uk.co.zutty.envy
+package uk.co.zutty.envy.entity
 {
 	import net.flashpunk.Entity;
 	import net.flashpunk.FP;
@@ -7,8 +7,9 @@ package uk.co.zutty.envy
 	import net.flashpunk.utils.Key;
 	
 	import uk.co.zutty.envy.path.Node;
+	import uk.co.zutty.envy.Vector2D;
 
-	public class Player extends Thing {
+	public class Player extends Hurtable {
 		
 		[Embed(source = 'assets/alien.png')]
 		private const ALIEN_IMAGE:Class;

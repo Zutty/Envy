@@ -1,11 +1,13 @@
-package uk.co.zutty.envy
+package uk.co.zutty.envy.entity
 {
 	import net.flashpunk.Entity;
 	import net.flashpunk.FP;
 	import net.flashpunk.graphics.Image;
 	import net.flashpunk.tweens.misc.Alarm;
+	import uk.co.zutty.envy.Vector2D;
+	import uk.co.zutty.envy.Waypoint;
 
-	public class Creep extends Thing {
+	public class Creep extends Hurtable {
 		
 		private const FADE_RATE:Number = 0.03;
 		
@@ -21,7 +23,6 @@ package uk.co.zutty.envy
 		public function Creep() {
 			super();
 			_img = new Image(SMALLALIEN_IMAGE);
-			_img.alpha = 0.0;
 			_img.smooth = true;
 			_img.centerOrigin();
 			graphic = _img;
@@ -30,6 +31,12 @@ package uk.co.zutty.envy
 			setHitbox(24, 24, 12, 12);
             type = "creep";
 		}
+        
+        override public function added():void {
+            super.added();
+            
+            _img.alpha = 0.0;
+        }
 		
 		public function goTo(waypoint:Waypoint):void {
             if(waypoint) {

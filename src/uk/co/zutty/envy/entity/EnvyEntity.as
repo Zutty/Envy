@@ -1,9 +1,11 @@
-package uk.co.zutty.envy
+package uk.co.zutty.envy.entity
 {
 	import net.flashpunk.Entity;
 	import net.flashpunk.FP;
 	import net.flashpunk.Graphic;
 	import net.flashpunk.Mask;
+	import uk.co.zutty.envy.GameWorld;
+	import uk.co.zutty.envy.Vector2D;
 	
 	public class EnvyEntity extends Entity {
 		

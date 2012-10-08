@@ -1,12 +1,13 @@
-package uk.co.zutty.envy
+package uk.co.zutty.envy.entity
 {
 	import net.flashpunk.Entity;
 	import net.flashpunk.FP;
 	import net.flashpunk.Sfx;
 	import net.flashpunk.graphics.Image;
 	import net.flashpunk.graphics.Spritemap;
+	import uk.co.zutty.envy.Waypoint;
 
-	public class Spawner extends Thing {
+	public class Spawner extends Hurtable {
 		
 		private const SPAWN_TIME:uint = 60;
 

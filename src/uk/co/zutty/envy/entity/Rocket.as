@@ -1,4 +1,4 @@
-package uk.co.zutty.envy
+package uk.co.zutty.envy.entity
 {
 	import net.flashpunk.Entity;
 	import net.flashpunk.FP;
@@ -6,8 +6,9 @@ package uk.co.zutty.envy
 	import net.flashpunk.Mask;
 	import net.flashpunk.graphics.Image;
 	import net.flashpunk.graphics.Spritemap;
+	import uk.co.zutty.envy.Vector2D;
 	
-	public class Bullet extends EnvyEntity {
+	public class Rocket extends EnvyEntity {
 	
         private const ARC_FACTOR:Number = 7;
 		private const SPEED:Number = 4;
@@ -21,7 +22,7 @@ package uk.co.zutty.envy
         private var _range:Number;
         private var _z:Number;
 		
-		public function Bullet() {
+		public function Rocket() {
 			super();
             
             _gfx = new Spritemap(BULLET_IMAGE, 24, 24);
