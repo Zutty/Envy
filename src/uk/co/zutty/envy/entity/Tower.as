@@ -36,6 +36,7 @@ package uk.co.zutty.envy.entity
 			addGraphic(_gun);
 
             setHitbox(48, 48, 0, 0);
+            type = "building";
 		}
 		
 		override public function update():void {

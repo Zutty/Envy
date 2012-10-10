@@ -34,7 +34,9 @@ package uk.co.zutty.envy.entity
 			_spritemap.play("spin");
             _spritemap.centerOrigin();
 			graphic = _spritemap;
+            
 			setHitbox(48, 48, 24, 24);
+            type = "building";
 			
 			_pop = new Sfx(POP_SOUND);
 

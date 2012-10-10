@@ -6,17 +6,18 @@ package uk.co.zutty.envy.entity
 	import net.flashpunk.utils.Input;
 	import net.flashpunk.utils.Key;
 	
-	import uk.co.zutty.envy.path.Node;
 	import uk.co.zutty.envy.Vector2D;
+	import uk.co.zutty.envy.path.Node;
 
 	public class Player extends Hurtable {
 		
-		[Embed(source = 'assets/alien.png')]
+        [Embed(source = 'assets/alien.png')]
 		private const ALIEN_IMAGE:Class;
 		
 		private var _speed:Number;
 		private var _direction:Vector2D;
         private var _gfx:Image;
+        private var _blueprint:Blueprint;
 		
 		public function Player() {
 			super();
@@ -25,8 +26,9 @@ package uk.co.zutty.envy.entity
             _gfx.centerOrigin();
 			graphic = _gfx;
 
+            _blueprint = null;
             _speed = 3;
-			health = 10;
+			maxHealth = 10;
 			setHitbox(48, 48, 24, 24);
             type = "creep";
 		}
@@ -44,11 +46,23 @@ package uk.co.zutty.envy.entity
 			}
 			
 			if(Input.pressed(Key.SPACE)) {
-				var s:Spawner = new Spawner();
-				s.x = x;
-				s.y = y;
-				gameworld.add(s);
+                if(_blueprint && _blueprint.buildable) {
+                    var s:Spawner = new Spawner();
+                    s.x = _blueprint.x + 24;
+                    s.y = _blueprint.y + 24;
+                    gameworld.add(s);
+                    
+                    gameworld.recycle(_blueprint);
+                    _blueprint = null;
+                } else if(!_blueprint) {
+                    _blueprint = gameworld.create(Blueprint) as Blueprint;
+                }
 			}
+
+            if(_blueprint) {
+                _blueprint.x = Math.round((x-24)/48) * 48;
+                _blueprint.y = Math.round((y-24)/48) * 48;
+            }
 		}
 	}
 }
