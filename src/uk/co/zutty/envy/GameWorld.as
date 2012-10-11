@@ -9,18 +9,20 @@ package uk.co.zutty.envy
     import net.flashpunk.utils.Input;
     import net.flashpunk.utils.Key;
     
-    import uk.co.zutty.envy.levels.Level1;
-    import uk.co.zutty.envy.levels.NavGraph;
-    import uk.co.zutty.envy.levels.OgmoLevel;
     import uk.co.zutty.envy.entity.EarthBase;
     import uk.co.zutty.envy.entity.Player;
     import uk.co.zutty.envy.entity.Tower;
+    import uk.co.zutty.envy.levels.Level1;
+    import uk.co.zutty.envy.levels.NavGraph;
+    import uk.co.zutty.envy.levels.OgmoLevel;
+    import uk.co.zutty.envy.path.Pathfinder;
     
     public class GameWorld extends World {
         
         private var _level:OgmoLevel;
         private var _player:Player;
         private var _navGraph:NavGraph;
+        private var _pathfinder:Pathfinder;
         private var _time:uint = 0;
         
         public function GameWorld() {
@@ -54,6 +56,7 @@ package uk.co.zutty.envy
             }
             
             _navGraph = _level.getNavGraph("roads");
+            _pathfinder = new Pathfinder(_navGraph, _level.tileWidth, _level.tileHeight);
         }
         
         public function getPathFrom(x:Number, y:Number):Waypoint {
@@ -65,7 +68,7 @@ package uk.co.zutty.envy
             var gx:int = goal.x / _level.tileWidth;
             var gy:int = goal.y / _level.tileHeight;
             
-            var path:Waypoint = Main.pathfinder.findPath(from.x, from.y, gx, gy, _navGraph, _level.tileWidth, _level.tileHeight);
+            var path:Waypoint = _pathfinder.findPath(from.x, from.y, gx, gy);
             
             return path;
         }

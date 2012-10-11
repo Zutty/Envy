@@ -8,16 +8,25 @@ package uk.co.zutty.envy.path
     
     public class Pathfinder {
         
-        private var _neighbors:Vector.<Point>;
-        
-        public function Pathfinder() {
-            _neighbors = new Vector.<Point>();
-            for(var i:int = 0; i < 4; i++) {
-                _neighbors[i] = new Point();
-            }
+        private static const _NEIGHBORS:Vector.<Point> = new Vector.<Point>(4);
+        {
+            _NEIGHBORS[0] = new Point();
+            _NEIGHBORS[1] = new Point();
+            _NEIGHBORS[2] = new Point();
+            _NEIGHBORS[3] = new Point();
         }
         
-        public function findPath(fromX:int, fromY:int, goalX:int, goalY:int, navGraph:NavGraph, tileW:Number, tileH:Number):Waypoint {
+        private var _navGraph:NavGraph;
+        private var _tileW:Number;
+        private var _tileH:Number;
+        
+        public function Pathfinder(navGraph:NavGraph, tileW:Number, tileH:Number) {
+            _navGraph = navGraph;
+            _tileW = tileW;
+            _tileH = tileH;
+        }
+        
+        public function findPath(fromX:int, fromY:int, goalX:int, goalY:int):Waypoint {
             var h:Function = function (x:int, y:int):Number { return distManhattan(x, y, goalX, goalY); }
             var open:Vector.<Node> = new Vector.<Node>();
             var closed:Dictionary = new Dictionary();
@@ -29,14 +38,14 @@ package uk.co.zutty.envy.path
                 var current:Node = open.shift();
                 
                 if(current.x == goalX && current.y == goalY) {
-                    return walkReverse(current, tileW, tileH);
+                    return walkReverse(current, _tileW, _tileH);
                 }
                 
-                closed[toTileNum(current.x, current.y, navGraph)] = 1;
+                closed[toTileNum(current.x, current.y)] = 1;
                 
                 // Get neighbors
                 for each(var n:Point in neighbors(current)) {
-                    if(navGraph.isNavigable(n.x, n.y) && !(toTileNum(n.x, n.y, navGraph) in closed)) {
+                    if(_navGraph.isNavigable(n.x, n.y) && !(toTileNum(n.x, n.y) in closed)) {
                         open.push(new Node(n.x, n.y, current.cost + 1, h(n.x, n.y), current));
                     }
                 }
@@ -48,24 +57,24 @@ package uk.co.zutty.envy.path
             return null;
         }
         
-        private function toTileNum(x:int, y:int, n:NavGraph):int {
-            return (y * n.width) + x;
+        private function toTileNum(x:int, y:int):int {
+            return (y * _navGraph.width) + x;
         }
         
         private function neighbors(node:Node):Vector.<Point> {
-            _neighbors[0].x = node.x-1;
-            _neighbors[0].y = node.y;
+            _NEIGHBORS[0].x = node.x - 1;
+            _NEIGHBORS[0].y = node.y;
             
-            _neighbors[1].x = node.x;
-            _neighbors[1].y = node.y-1;
+            _NEIGHBORS[1].x = node.x;
+            _NEIGHBORS[1].y = node.y - 1;
 
-            _neighbors[2].x = node.x+1;
-            _neighbors[2].y = node.y;
+            _NEIGHBORS[2].x = node.x + 1;
+            _NEIGHBORS[2].y = node.y;
 
-            _neighbors[3].x = node.x;
-            _neighbors[3].y = node.y+1;
+            _NEIGHBORS[3].x = node.x;
+            _NEIGHBORS[3].y = node.y + 1;
 
-            return _neighbors;
+            return _NEIGHBORS;
         }
         
         private function walkReverse(node:Node, tileW:Number, tileH:Number):Waypoint {
