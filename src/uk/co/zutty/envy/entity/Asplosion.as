@@ -6,7 +6,7 @@ package uk.co.zutty.envy.entity
     import net.flashpunk.Mask;
     import net.flashpunk.graphics.Spritemap;
     
-    public class Asplosion extends EnvyEntity {
+    public class Asplosion extends Entity {
         
         [Embed(source = 'assets/asplosion.png')]
         private static const ASPLOSION_IMAGE:Class;
@@ -28,7 +28,7 @@ package uk.co.zutty.envy.entity
         }
         
         public function destroy():void {
-            FP.world.recycle(this);
+            world.recycle(this);
         }
         
         override public function added():void {

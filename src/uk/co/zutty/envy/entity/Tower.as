@@ -6,9 +6,10 @@ package uk.co.zutty.envy.entity
     import net.flashpunk.Mask;
     import net.flashpunk.graphics.Graphiclist;
     import net.flashpunk.graphics.Image;
+    
     import uk.co.zutty.envy.Vector2D;
     
-    public class Tower extends EnvyEntity {
+    public class Tower extends Entity {
         
         private const FIRING_TIME:uint = 100;
         private const RANGE:uint = 250;
@@ -44,7 +45,7 @@ package uk.co.zutty.envy.entity
             
             _time++;
             
-            var target:Entity = gameworld.nearestToEntity("creep", this);
+            var target:Entity = world.nearestToEntity("creep", this);
             
             if(target != null && distanceFrom(target, true) <= RANGE) {
                 var cx:Number = x + (width/2);
@@ -55,7 +56,7 @@ package uk.co.zutty.envy.entity
                 
                 if(_time > FIRING_TIME) {
                     _time = 0;
-                    var rocket:Rocket = gameworld.create(Rocket) as Rocket;
+                    var rocket:Rocket = world.create(Rocket) as Rocket;
                     rocket.x = cx;
                     rocket.y = cy;
                     rocket.target = new Vector2D(target.x, target.y); 

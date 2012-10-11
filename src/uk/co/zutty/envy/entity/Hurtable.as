@@ -1,10 +1,13 @@
 package uk.co.zutty.envy.entity
 {
+    import net.flashpunk.Entity;
     import net.flashpunk.FP;
     import net.flashpunk.Graphic;
     import net.flashpunk.Mask;
     
-    public class Hurtable extends EnvyEntity {
+    import uk.co.zutty.envy.GameWorld;
+    
+    public class Hurtable extends Entity {
         
         private var _maxHealth:Number = 0;
         private var _health:Number = 0;
@@ -37,7 +40,7 @@ package uk.co.zutty.envy.entity
         public function hurt():void {
             _health--;
             if(_health <= 0) {
-                gameworld.recycle(this);
+                world.recycle(this);
             }
         }
     }

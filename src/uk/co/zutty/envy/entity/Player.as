@@ -50,12 +50,12 @@ package uk.co.zutty.envy.entity
                     var s:Spawner = new Spawner();
                     s.x = _blueprint.x + 24;
                     s.y = _blueprint.y + 24;
-                    gameworld.add(s);
+                    world.add(s);
                     
-                    gameworld.recycle(_blueprint);
+                    world.recycle(_blueprint);
                     _blueprint = null;
                 } else if(!_blueprint) {
-                    _blueprint = gameworld.create(Blueprint) as Blueprint;
+                    _blueprint = world.create(Blueprint) as Blueprint;
                 }
             }
             

@@ -1,10 +1,11 @@
 package uk.co.zutty.envy.entity
 {
+    import net.flashpunk.Entity;
     import net.flashpunk.Graphic;
     import net.flashpunk.Mask;
     import net.flashpunk.graphics.Spritemap;
     
-    public class Blueprint extends EnvyEntity {
+    public class Blueprint extends Entity {
         
         [Embed(source = 'assets/spawner_blueprint.png')]
         private static const BLUEPRINT_IMAGE:Class;

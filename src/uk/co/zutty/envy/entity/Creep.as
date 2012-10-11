@@ -67,7 +67,7 @@ package uk.co.zutty.envy.entity
             
             var eb:EarthBase = collide("building", x, y) as EarthBase;
             if(eb) {
-                gameworld.recycle(this);
+                world.recycle(this);
             }
         }
         

@@ -5,6 +5,9 @@ package uk.co.zutty.envy.entity
     import net.flashpunk.Sfx;
     import net.flashpunk.graphics.Image;
     import net.flashpunk.graphics.Spritemap;
+    
+    import uk.co.zutty.envy.GameWorld;
+    import uk.co.zutty.envy.Main;
     import uk.co.zutty.envy.Waypoint;
     
     public class Spawner extends Hurtable {
@@ -50,17 +53,14 @@ package uk.co.zutty.envy.entity
         }
         
         override public function added():void {
-            if(gameworld) {
-                _path = gameworld.getPathFrom(x, y);
-            }
+            _path = (FP.world as GameWorld).getPathFrom(x, y);
         }
         
         public function spawnCreep():void {
             _lastSpawned = _time;
-            var creep:Creep = gameworld.create(Creep) as Creep;
+            var creep:Creep = world.create(Creep) as Creep;
             creep.x = x;
             creep.y = y;
-            gameworld.add(creep);
             creep.onSpawn(pop);
             creep.goTo(_path);			
         }
