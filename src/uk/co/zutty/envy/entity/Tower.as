@@ -5,8 +5,9 @@ package uk.co.zutty.envy.entity
     import net.flashpunk.Graphic;
     import net.flashpunk.Mask;
     import net.flashpunk.graphics.Graphiclist;
-    import net.flashpunk.graphics.Image;
+    import net.flashpunk.graphics.Spritemap;
     
+    import uk.co.zutty.envy.RotatedSpritemap;
     import uk.co.zutty.envy.Vector2D;
     
     public class Tower extends Entity {
@@ -14,27 +15,28 @@ package uk.co.zutty.envy.entity
         private const FIRING_TIME:uint = 100;
         private const RANGE:uint = 250;
         
-        [Embed(source = 'assets/tower_base.png')]
+		[Embed(source = 'assets/turret_flat.png')]
+		private const TOWER_IMAGE:Class;
+
+		[Embed(source = 'assets/tower_base.png')]
         private const TOWER_BASE_IMAGE:Class;
         
         [Embed(source = 'assets/tower_gun.png')]
         private const TOWER_GUN_IMAGE:Class;
         
-        private var _gun:Image; 
+        private var _gun:RotatedSpritemap; 
         private var _time:uint;
         
         public function Tower(x:Number, y:Number) {
             super(x, y);
             
-            var base:Image = new Image(TOWER_BASE_IMAGE);
-            addGraphic(base);
+            //var base:Image = new Image(TOWER_BASE_IMAGE);
+            //addGraphic(base);
             
-            _gun = new Image(TOWER_GUN_IMAGE);
-            _gun.smooth = true;
-            _gun.centerOrigin();
-            _gun.x = 24;
-            _gun.y = 24;
-            addGraphic(_gun);
+            _gun = new RotatedSpritemap(TOWER_IMAGE, 48, 48); //Image(TOWER_GUN_IMAGE);
+            //_gun.smooth = true;
+            //addGraphic(_gun);
+			graphic = _gun;
             
             setHitbox(48, 48, 0, 0);
             type = "building";
@@ -52,7 +54,7 @@ package uk.co.zutty.envy.entity
                 var cy:Number = y + (height/2);
                 var dx:Number = cx - target.x;
                 var dy:Number = cy - target.y;
-                _gun.angle = (Math.atan2(dx, dy) * 180/Math.PI);
+                _gun.frameAngle = (Math.atan2(dx, dy) * 180/Math.PI);
                 
                 if(_time > FIRING_TIME) {
                     _time = 0;
