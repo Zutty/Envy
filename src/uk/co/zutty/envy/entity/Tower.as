@@ -15,7 +15,7 @@ package uk.co.zutty.envy.entity
         private const FIRING_TIME:uint = 100;
         private const RANGE:uint = 250;
         
-		[Embed(source = 'assets/turret_flat.png')]
+		[Embed(source = 'assets/rocket_tower.png')]
 		private const TOWER_IMAGE:Class;
 
 		[Embed(source = 'assets/tower_base.png')]
@@ -33,9 +33,10 @@ package uk.co.zutty.envy.entity
             //var base:Image = new Image(TOWER_BASE_IMAGE);
             //addGraphic(base);
             
-            _gun = new RotatedSpritemap(TOWER_IMAGE, 48, 48); //Image(TOWER_GUN_IMAGE);
+            _gun = new RotatedSpritemap(TOWER_IMAGE, 48, 50); //Image(TOWER_GUN_IMAGE);
             //_gun.smooth = true;
             //addGraphic(_gun);
+			_gun.y = -2;
 			graphic = _gun;
             
             setHitbox(48, 48, 0, 0);
