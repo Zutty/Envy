@@ -715,13 +715,13 @@
   </roads>
   <buildings>
     <base x="624" y="432"/>
-    <tower x="432" y="432"/>
-    <tower x="816" y="432"/>
-    <tower x="816" y="528"/>
-    <tower x="672" y="672"/>
-    <tower x="1056" y="384"/>
-    <tower x="624" y="288"/>
-    <tower x="528" y="768"/>
+    <rocket-tower x="432" y="432"/>
+    <rocket-tower x="816" y="432"/>
+    <gun-tower x="816" y="528"/>
+    <rocket-tower x="672" y="672"/>
+    <gun-tower x="1056" y="384"/>
+    <rocket-tower x="624" y="288"/>
+    <gun-tower x="528" y="768"/>
   </buildings>
   <goals>
     <maingoal x="672" y="480"/>

@@ -17,7 +17,7 @@ package uk.co.zutty.envy
 		}
 		
 		public function set frameAngle(a:Number):void {
-			var n:uint = (Math.round(a / _increment) + 16) % frameCount;
+			var n:uint = (Math.round(a / _increment) + (frameCount / 2)) % frameCount;
 			play(String(n));
 		}
 	}

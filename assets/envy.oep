@@ -23,7 +23,8 @@
 	</tilesets>   
 	<objects>
 		<object name="base" image="earth_base.png" width="96" height="96"/>
-		<object name="tower" image="tower_base.png" width="48" height="48"/>
+		<object name="rocket-tower" image="tower_base.png" width="48" height="48"/>
+		<object name="gun-tower" image="tower_gun.png" width="48" height="48"/>
 		<object name="maingoal" image="navPoint.png" width="48" height="48"/>
 	</objects>
 </project>
