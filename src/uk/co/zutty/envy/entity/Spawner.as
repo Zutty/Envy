@@ -32,8 +32,8 @@ package uk.co.zutty.envy.entity
         
         public function Spawner() {
             super();
-            _spritemap = new Spritemap(SPAWNER_IMAGE, 48, 48);
-            _spritemap.add("spin", [0, 1, 2, 3, 4, 5, 6, 7], 0.6, true);
+            _spritemap = new Spritemap(SPAWNER_IMAGE, 48, 64);
+            _spritemap.add("spin", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], 0.5, true);
             _spritemap.play("spin");
             _spritemap.centerOrigin();
             graphic = _spritemap;
