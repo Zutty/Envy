@@ -17,9 +17,11 @@ package uk.co.zutty.envy.entity
 		public function Tower(img:Class, fireInterval:uint, range:uint) {
 			super();
 
-			_gfx = new RotatedSpritemap(img, 48, 64);
+			_gfx = new RotatedSpritemap(img, 48, 64, 32);
 			_gfx.y = -16;
 			graphic = _gfx;
+			
+			_gfx.addRotated("turn", [0], 0, false);
 			
 			_fireInterval = fireInterval;
 			_range = range;

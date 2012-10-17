@@ -12,11 +12,18 @@ package uk.co.zutty.envy.entity
 
 	public class GunTower extends Tower {
 			
+		private const FIRE_FRAMES:uint = 15;
+		
 		[Embed(source = 'assets/gun_tower.png')]
 		private const GUN_TOWER_IMAGE:Class;
+
+		private var _fireTime:uint = 0;
 		
 		public function GunTower() {
 			super(GUN_TOWER_IMAGE, 30, 100);
+			
+			_gfx.addRotated("fire", [1, 0], 0.3);
+			_gfx.playRotated("turn");
 		}
 		
 		override public function fire(target:Entity):void {
@@ -24,6 +31,20 @@ package uk.co.zutty.envy.entity
 			var ricochet:Entity = world.create(Ricochet);
 			ricochet.x = target.x;
 			ricochet.y = target.y;
+
+			_gfx.playRotated("fire");
+			_fireTime = FIRE_FRAMES;
+		}
+		
+		override public function update():void {
+			super.update();
+			
+			if(_fireTime > 0) {
+				_fireTime--;
+				if(_fireTime == 0) {
+					_gfx.playRotated("turn");
+				}
+			}
 		}
 	}
 }
