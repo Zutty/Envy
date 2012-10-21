@@ -17,6 +17,7 @@ package uk.co.zutty.envy
     import uk.co.zutty.envy.entity.Player;
     import uk.co.zutty.envy.entity.RocketTower;
     import uk.co.zutty.envy.entity.Spawner;
+    import uk.co.zutty.envy.entity.Tower;
     import uk.co.zutty.envy.levels.Level1;
     import uk.co.zutty.envy.levels.NavGraph;
     import uk.co.zutty.envy.levels.OgmoLevel;
@@ -121,6 +122,12 @@ package uk.co.zutty.envy
                 getClass(Spawner, spawners);
                 for each(var s:Spawner in spawners) {
                     s.spawn = false;
+                }
+
+                var towers:Array = [];
+                getClass(Tower, towers);
+                for each(var t:Tower in towers) {
+                    t.activated = false;
                 }
             }
         }

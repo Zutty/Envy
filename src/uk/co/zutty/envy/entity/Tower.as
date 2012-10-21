@@ -12,6 +12,7 @@ package uk.co.zutty.envy.entity
 		protected var _gfx:RotatedSpritemap;
 		protected var _fireInterval:uint
 		protected var _range:Number;
+        protected var _activated:Boolean;
 		private var _time:uint = 0;
 		
 		public function Tower(img:Class, fireInterval:uint, range:uint) {
@@ -29,6 +30,14 @@ package uk.co.zutty.envy.entity
 			setHitbox(48, 48, 0, 0);
 			type = "building";
 		}
+        
+        override public function added():void {
+            _activated = true;
+        }
+        
+        public function set activated(f:Boolean):void {
+            _activated = f;
+        }
 		
 		public function fire(target:Entity):void {}
 
@@ -39,7 +48,7 @@ package uk.co.zutty.envy.entity
 			
 			var target:Entity = world.nearestToEntity("creep", this);
 			
-			if(target != null && distanceFrom(target, true) <= _range) {
+			if(_activated && target != null && distanceFrom(target, true) <= _range) {
 				var cx:Number = x + (width/2);
 				var cy:Number = y + (height/2);
 				var dx:Number = cx - target.x;
