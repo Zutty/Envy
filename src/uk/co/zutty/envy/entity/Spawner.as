@@ -29,6 +29,7 @@ package uk.co.zutty.envy.entity
         private var _time:uint;
         private var _lastSpawned:uint;
         private var _path:Waypoint;
+        private var _spawn:Boolean;
         
         public function Spawner() {
             super();
@@ -52,8 +53,17 @@ package uk.co.zutty.envy.entity
             return _path;
         }
         
+        public function get spawn():Boolean {
+            return _spawn;
+        }
+        
+        public function set spawn(s:Boolean):void {
+            _spawn = s;
+        }
+        
         override public function added():void {
             _path = (FP.world as GameWorld).getPathFrom(x, y);
+            _spawn = true;
         }
         
         public function spawnCreep():void {
@@ -73,7 +83,7 @@ package uk.co.zutty.envy.entity
             super.update();
             
             _time++;
-            if(_time > _lastSpawned + SPAWN_TIME) {
+            if(_spawn && _time > _lastSpawned + SPAWN_TIME) {
                 spawnCreep();
             }
         }

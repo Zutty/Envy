@@ -11,6 +11,7 @@ package uk.co.zutty.envy.entity
         
         private var _maxHealth:Number = 0;
         private var _health:Number = 0;
+        private var _callback:Function;
         
         public function Hurtable(x:Number=0, y:Number=0, graphic:Graphic=null, mask:Mask=null) {
             super(x, y, graphic, mask);
@@ -37,9 +38,21 @@ package uk.co.zutty.envy.entity
             _health = h;
         }
         
+        public function get healthPct():Number {
+            return _health / _maxHealth;
+        }
+        
+        public function set callback(cb:Function):void {
+            _callback = cb;
+        }
+
         public function hurt():void {
             _health--;
+            
             if(_health <= 0) {
+                if(_callback != null) {
+                    _callback();
+                }
                 world.recycle(this);
             }
         }

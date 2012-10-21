@@ -6,13 +6,17 @@ package uk.co.zutty.envy
     import net.flashpunk.FP;
     import net.flashpunk.World;
     import net.flashpunk.graphics.Image;
+    import net.flashpunk.graphics.Text;
     import net.flashpunk.utils.Input;
     import net.flashpunk.utils.Key;
     
     import uk.co.zutty.envy.entity.EarthBase;
     import uk.co.zutty.envy.entity.GunTower;
+    import uk.co.zutty.envy.entity.Hud;
+    import uk.co.zutty.envy.entity.Hurtable;
     import uk.co.zutty.envy.entity.Player;
     import uk.co.zutty.envy.entity.RocketTower;
+    import uk.co.zutty.envy.entity.Spawner;
     import uk.co.zutty.envy.levels.Level1;
     import uk.co.zutty.envy.levels.NavGraph;
     import uk.co.zutty.envy.levels.OgmoLevel;
@@ -20,19 +24,30 @@ package uk.co.zutty.envy
     
     public class GameWorld extends World {
         
+        private static const STATE_PLAY:uint = 1; 
+        private static const STATE_WIN:uint = 1; 
+        private static const STATE_LOSE:uint = 1; 
+        
         private var _level:OgmoLevel;
         private var _player:Player;
         private var _navGraph:NavGraph;
         private var _pathfinder:Pathfinder;
         private var _time:uint = 0;
+        private var _hud:Hud;
+        private var _state:uint;
         
-        public function GameWorld() {
+        override public function begin():void {
+            _state = STATE_PLAY;
+            
             loadLevel(new Level1());
             
             _player = new Player();
             _player.x = 48;
             _player.y = 48;
             add(_player);
+
+            _hud = new Hud();
+            add(_hud);
         }
         
         private function loadLevel(lvl:OgmoLevel):void {
@@ -46,6 +61,7 @@ package uk.co.zutty.envy
                 var b:EarthBase = new EarthBase();
                 b.x = p.x;
                 b.y = p.y;
+                b.callback = destroyBase;
                 add(b);
             }
             
@@ -84,6 +100,29 @@ package uk.co.zutty.envy
             super.update();
             
             camFollow(_player);
+            
+            var base:Hurtable = classFirst(EarthBase) as Hurtable;
+            if(base != null) {
+                _hud.baseHealth = base.healthPct;
+            }
+        }
+        
+        public function destroyBase():void {
+            if(_state == STATE_PLAY) {
+                _state = STATE_WIN;
+                
+                var txt:Text = new Text("Hooray!", 320, 240, {size:72, align: "center"});
+                txt.centerOrigin();
+                txt.scrollX = 0;
+                txt.scrollY = 0;
+                addGraphic(txt);
+                
+                var spawners:Array = [];
+                getClass(Spawner, spawners);
+                for each(var s:Spawner in spawners) {
+                    s.spawn = false;
+                }
+            }
         }
         
         public function camFollow(e:Entity):void {
