@@ -34,12 +34,9 @@ package uk.co.zutty.envy
             add(_player);
         }
         
-        public function isOutOfBounds(e:Entity):Boolean {
-            return (e.x - e.width) < 0 || (e.x + e.width) > _level.width || (e.y - e.height) < 0 || (e.y + e.height) > _level.height;
-        }
-        
         private function loadLevel(lvl:OgmoLevel):void {
             _level = lvl;
+            
             add(lvl.getLayer("ground"));
             add(lvl.getLayer("roads"));
             
@@ -80,8 +77,13 @@ package uk.co.zutty.envy
         }
         
         public function camFollow(e:Entity):void {
-            FP.camera.x = FP.clamp(e.x - FP.width/2, 0, 1440 - FP.width);            
-            FP.camera.y = FP.clamp(e.y - FP.height/2, 0, 960 - FP.height);            
+            FP.camera.x = FP.clamp(e.x - FP.width/2, 0, _level.width - FP.width);            
+            FP.camera.y = FP.clamp(e.y - FP.height/2, 0, _level.height - FP.height);            
+        }
+
+        public function isOutOfBounds(e:Entity):Boolean {
+            return (e.x - e.width) < 0 || (e.x + e.width) > _level.width 
+                || (e.y - e.height) < 0 || (e.y + e.height) > _level.height;
         }
     }
 }
