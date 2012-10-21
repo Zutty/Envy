@@ -49,9 +49,10 @@ package uk.co.zutty.envy.entity
             if(_img.alpha < 1.0) {
                 _img.alpha += Math.min(FADE_RATE, 1.0);
                 _img.scale = _img.alpha;
-                _img.angle = (_img.alpha * 500) + 220;
+                _img.angle = -(_img.alpha * 500) - 220;
                 
                 if(_img.alpha == 1.0 && _spawnCallback != null) {
+					_img.angle = 0;
                     _spawnCallback();
                 }
             } else if(_waypoint != null) {

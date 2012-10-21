@@ -10,8 +10,9 @@ package uk.co.zutty.envy
     import net.flashpunk.utils.Key;
     
     import uk.co.zutty.envy.entity.EarthBase;
+    import uk.co.zutty.envy.entity.GunTower;
     import uk.co.zutty.envy.entity.Player;
-    import uk.co.zutty.envy.entity.Tower;
+    import uk.co.zutty.envy.entity.RocketTower;
     import uk.co.zutty.envy.levels.Level1;
     import uk.co.zutty.envy.levels.NavGraph;
     import uk.co.zutty.envy.levels.OgmoLevel;
@@ -48,9 +49,18 @@ package uk.co.zutty.envy
                 add(b);
             }
             
-            for each(p in _level.getObjectPositions("buildings", "tower")) {
-                add(new Tower(p.x, p.y));
+            for each(p in _level.getObjectPositions("buildings", "rocket-tower")) {
+				var rtower:RocketTower = new RocketTower();
+				rtower.x = p.x;
+				rtower.y = p.y
+                add(rtower);
             }
+			for each(p in _level.getObjectPositions("buildings", "gun-tower")) {
+				var gtower:GunTower = new GunTower();
+				gtower.x = p.x;
+				gtower.y = p.y
+				add(gtower);
+			}
             
             _navGraph = _level.getNavGraph("roads");
             _pathfinder = new Pathfinder(_navGraph, _level.tileWidth, _level.tileHeight);
